@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>G IMAGE</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
+    <link rel="stylesheet" href="{{url_for('static',filename='css/gimage.css')}}">
+    <script src="{{url_for('static',filename='js/getlinks.js')}}"></script>
+</head>
+
+
+<body>
+    <div class="main">
+        <div class="upper">
+            <h4>Search Images</h4>
+            <div class="form-control">
+                <form action="">
+                    <input type="text" placeholder="Search and download image from google">
+                </form>
+                <button onclick="search()">Search</button>
+            </div>
+    
+        </div>
+        <header id="img-cont">
+        </header>
+        <div class="load-more">
+            <button onclick="getlink()">
+                Load more
+            </button>
+        </div>
+    </div>
+    <p id="download" hidden>
+        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 512 512">
+            <title></title>
+            <g id="icomoon-ignore">
+            </g>
+            <path d="M368 224l-128 128-128-128h80v-192h96v192zM240 352h-240v128h480v-128h-240zM448 416h-64v-32h64v32z"></path>
+        </svg>
+    </p>
+    </body>
+</html>
