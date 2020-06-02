@@ -1,1 +1,1 @@
-web: gunicorn GImage:socketio
+web: gunicorn -k gevent -w 1 GImage:flask_app
