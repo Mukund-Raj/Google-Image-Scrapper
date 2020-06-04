@@ -1,5 +1,4 @@
-
-var socket = io.connect('http://'+document.domain+':'+location.port+'/getimage');
+var socket = io.connect(window.location.protocol+'//'+document.domain+':'+location.port+'/getimages');
 
 let main_add =  document.getElementById('head');
 
@@ -98,4 +97,8 @@ function create_div(link)
 socket.on('getimage',function(link){
     create_div(link);
     console.log(link);
+});
+
+socket.on('onconnect',function(message){
+    console.log(message)
 });

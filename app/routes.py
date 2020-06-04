@@ -7,6 +7,10 @@ import requests
 
 next_link = None
 
+@socketio.on('connect',namespace='/getimages')
+def onconnect():
+    socketio.emit('onconnect','user connected',namespace='/getimages')
+
 @flask_app.route('/')
 @flask_app.route('/images')
 def start():
