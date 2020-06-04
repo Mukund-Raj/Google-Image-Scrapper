@@ -13,6 +13,10 @@ import json
 browser = None
 total_images = 40
 
+
+driver_path  = os.path.dirname(__file__)
+driver_path = os.path.join(driver_path,'chromedriver.exe')
+
 def WAIT(how_much=1):
     ''' Default value is 1 @param how_much '''
     time.sleep(how_much)
@@ -140,10 +144,11 @@ def start_scrapper():
     #browser = open_remote_browser(command_executor,session_id)
     global browser
     chrome_option = webdriver.ChromeOptions()
-    chrome_option.add_argument('incognito')
+    #chrome_option.add_argument('incognito')
     chrome_option.add_argument("headless")
     #options = webdriver.FirefoxOptions()
     #options.add_argument('headless')
-    browser = webdriver.Chrome(chrome_options=chrome_option)#(chrome_options=chrome_option)#direct_chrome_browser()
+    
+    browser = webdriver.Chrome(chrome_options=chrome_option,executable_path=driver_path)#(chrome_options=chrome_option)#direct_chrome_browser()
     #search_url = "https://www.google.com/search?safe=off&site=&tbm=isch&source=hp&q={q}&oq={q}&gs_l=img"
     #calling  get_image_link with image divs
