@@ -9,11 +9,18 @@ function clickme(button) {
 function search()
 {
     event.preventDefault();
+    /*
+    if(document.getElementById('howmany').value == '')
+    {
+        alert('Please enter how many images you need');
+        return;
+    }
+    */
 
     let query = document.forms[0].elements[0].value;
     let formdata = new FormData();
     formdata.append('query',query);
-
+    
     let xhr = new XMLHttpRequest();
     xhr.open('POST','/query',true);
     xhr.send(formdata);
@@ -32,35 +39,20 @@ function search()
 
 function getlink()
 {
-    /*
-    let xhr = new XMLHttpRequest();
-    xhr.responseType = 'json';
-
-    xhr.open('GET','/getlink',true);
-    xhr.send();
-
-    xhr.onload = function(){
-    if(xhr.readyState == 4 && xhr.status == 200)
-    {
-        console.log(xhr.response);
-        let link_we_get = xhr.response;
-        create_div(link_we_get["all_links"])
-    }
+    let howmany = {};
+    let images_to_laod;
+    if(document.getElementById('howmany').value == '')
+        images_to_laod = 3
     else
-    {
-        console.log("error occured");
-    }
-    }
-*/
-let howmany = {}
-howmany['images'] = 50;
-socket.emit('getlink',howmany);
+        images_to_laod = parseInt(document.getElementById('howmany').value);
 
+    howmany['images'] = images_to_laod;
+    socket.emit('getlink',howmany);
 }
 
 function create_div(link)
 {
-    console.log(link," ",link.length);
+    //console.log(link," ",link.length);
     //for(let i=0;i<link.length;i++)
     //{
         let image_div = document.createElement('div');
@@ -90,13 +82,13 @@ function create_div(link)
         infodiv.appendChild(a);
 
         image_div.appendChild(infodiv);
-        window.scrollTo(0,document.body.scrollHeight);
+        //window.scrollTo(0,document.body.scrollHeight);
     //}
 
 }
 socket.on('getimage',function(link){
     create_div(link);
-    console.log(link);
+    //console.log(link);
 });
 
 socket.on('onconnect',function(message){

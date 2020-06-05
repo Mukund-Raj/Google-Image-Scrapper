@@ -8,14 +8,25 @@ import requests
 import shutil
 import os
 import json
+from app import ENV
+
+#global variables start
 
 #global browser variable
 browser = None
-total_images = 40
+total_images = 100
 
+#global variables end
+'''
+total number of images discovered till now
+so that we can keep track as user wants more images and clicking
+load more again and again and to start the get_all_the_image_divs
+generator so that we don't get repeated images over and over
+'''
+exhaustion = 0
 
-driver_path  = os.path.dirname(__file__)
-driver_path = os.path.join(driver_path,'chromedriver.exe')
+#a indicator of total images get in one find_elements_by_css_selector
+one_time_limit = 0
 
 def WAIT(how_much=1):
     ''' Default value is 1 @param how_much '''
@@ -25,7 +36,6 @@ def direct_chrome_browser():
     #chrome_option = webdriver.ChromeOptions()
     #chrome_option.add_argument("headless")
     #chrome_option.binary_location = r'C:\Users\RAJ\AppData\Local\Google\Chrome SxS\Application\chrome.exe'
-
     browser = webdriver.Chrome()#(chrome_options=chrome_option)
     return browser
 
@@ -38,13 +48,13 @@ def open_remote_browser(command_executor_arg,sess_id):
 #get all th image links not the actual big size image
 def get_all_the_image_divs():
     images_div = browser.find_elements_by_css_selector('img.rg_i')
-    limit = len(images_div)
-    print(f'\n\nthere are {limit} in here\n\n')
-    i = 0
-    while i<limit:
+    one_time_limit = len(images_div)
+    print(f'\n\nthere are {one_time_limit} in here\n\n')
+    i = exhaustion
+    while i<one_time_limit:
         yield images_div[i]
         i=i+1
-    return None
+    yield None
 
 
 def get_actual_link(image_div):
@@ -69,6 +79,7 @@ def get_image_size():
 
 #get actual link of the image it is a generator
 def get_image_link():
+    #wait 1 sec to load the page
     WAIT(1)  
     i=0
     count = 0
@@ -85,8 +96,15 @@ def get_image_link():
     j = 0
     src = None
     
-    while i < total_images:
+    #while i < total_images:
+    while True:
         image_div = next(all_image_divs)
+        if image_div is None:
+            all_image_divs = get_all_the_image_divs()
+            image_div = next(all_image_divs)
+            global exhaustion
+            exhaustion = exhaustion + one_time_limit
+
         image_div.click()
         WAIT(1)
         single_link={}
@@ -138,17 +156,31 @@ def search_query(query):
     #get_image_link()
 
 def start_scrapper():
+    '''
+    instantiate chrome browser
+    '''
     #command_executor = 'http://127.0.0.1:49670'
     #session_id = 'b6c04d8f371ddbae7d39c62a8bba4ac8'
     #opening remote browser persistent
     #browser = open_remote_browser(command_executor,session_id)
-    global browser
-    chrome_option = webdriver.ChromeOptions()
     #chrome_option.add_argument('incognito')
-    chrome_option.add_argument("headless")
     #options = webdriver.FirefoxOptions()
     #options.add_argument('headless')
     
-    browser = webdriver.Chrome(chrome_options=chrome_option,executable_path=driver_path)#(chrome_options=chrome_option)#direct_chrome_browser()
-    #search_url = "https://www.google.com/search?safe=off&site=&tbm=isch&source=hp&q={q}&oq={q}&gs_l=img"
-    #calling  get_image_link with image divs
+    global browser
+    #chrome options for deploying on heroku
+    chrome_option = webdriver.ChromeOptions()
+    if  ENV == 'dev':
+        print('in dev')
+        driver_path  = os.path.dirname(__file__)
+        driver_path = os.path.join(driver_path,'chromedriver.exe')
+        chrome_option.add_argument("--headless")
+        chrome_option.add_argument("--disable-dev-shm-usage")
+        browser = webdriver.Chrome(chrome_options=chrome_option,executable_path=driver_path)
+
+    elif ENV == 'prod':
+        chrome_option.binary_location = os.environ.get('GOOGLE_CHROME_BIN')
+        chrome_option.add_argument("--headless")
+        chrome_option.add_argument("--disable-dev-shm-usage")
+        chrome_option.add_argument("--no-sandbox")
+        browser = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"),chrome_options=chrome_option)
