@@ -1,15 +1,15 @@
+import json
+
+class user:
+    def __init__(self):
+        print('object created')
+        self.arr = [1,2,3]
+
+    def prints(self):
+        print(self.arr)
 
 
-def fun():
-    for i in range(5):
-        yield i
-    yield None
-
-
-f = fun()
-
-while True:
-    i = next(f)
-    if i is None:
-        break
-    print(i)
+if __name__ == "__main__":
+    u=user()
+    print(u.__dict__)
+    print(json.dumps(u.__dict__))

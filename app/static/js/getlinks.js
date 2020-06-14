@@ -2,52 +2,49 @@ var socket = io.connect(window.location.protocol+'//'+document.domain+':'+locati
 
 let main_add =  document.getElementById('head');
 
-function clickme(button) {
-    console.log(button);
+document.addEventListener('keydown',function(event){
+    if(event.keyCode == 13)
+    {
+        search();
+    }
+})
+
+window.onbeforeunload=function(e){
+    socket.disconnect();
 }
+
 
 function search()
 {
     event.preventDefault();
-    /*
-    if(document.getElementById('howmany').value == '')
-    {
-        alert('Please enter how many images you need');
-        return;
-    }
-    */
-
     let query = document.forms[0].elements[0].value;
-    let formdata = new FormData();
-    formdata.append('query',query);
-    
-    let xhr = new XMLHttpRequest();
-    xhr.open('POST','/query',true);
-    xhr.send(formdata);
-    xhr.onload = function(){
-    if(xhr.readyState == 4 && xhr.status == 200)
-    {
-        console.log(xhr.response);
-    }
-    else
-    {
-        console.log("error occured");
-    }
-    } 
-
+    let s_query = {};
+    s_query['query'] = query;
+    socket.emit('query',s_query);
+    console.log('send query');
 }
+
+//on receive query by the server then
+socket.on('query_recv',function(message){
+    console.log(message);
+    document.getElementById('load_more').disabled = false;
+    document.getElementById('load_more').innerHTML = "LOAD MORE";
+});
 
 function getlink()
 {
-    let howmany = {};
-    let images_to_laod;
-    if(document.getElementById('howmany').value == '')
-        images_to_laod = 3
-    else
-        images_to_laod = parseInt(document.getElementById('howmany').value);
+    if(document.getElementById('load_more').disabled==false)
+    {
+        let howmany = {};
+        let images_to_laod;
+        if(document.getElementById('howmany').value == '')
+            images_to_laod = 3
+        else
+            images_to_laod = parseInt(document.getElementById('howmany').value);
 
-    howmany['images'] = images_to_laod;
-    socket.emit('getlink',howmany);
+        howmany['images'] = images_to_laod;
+        socket.emit('getlink',howmany);
+    }
 }
 
 function create_div(link)

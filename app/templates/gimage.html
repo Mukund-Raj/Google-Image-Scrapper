@@ -13,26 +13,91 @@
 <body>
     <div class="main">
         <div class="upper">
-            <h4>Search Images</h4>
-            <div class="form-control">
+            <h4>G-Image Scrapped Images</h4>
+            <div class="form-control" id="search">
                 <form action="">
                     <input type="text" placeholder="Search and download image from google">
                 </form>
-                <button onclick="search()">Search</button>
+                <button type="submit" form="search" onclick="search()">Search</button>
             </div>
-            <div class="form-control" style="width:200px;margin-top: 0;">
-                <form action="">
-                    <input type="text"  id="howmany" placeholder="number of images to load">
-                </form>
-            </div>
+            <!--
+
+                <div class="form-control float" style="width:400px;margin-top: 0;">
+                    <form action="" style="white-space: nowrap;display: inline-flex;align-items: center;">
+                        <h5 style="margin-top: 0;margin-bottom: 0;padding: 2px 4px;">Number of images to load ></h5><input type="text"  id="howmany" placeholder="number of images to load">
+                    </form>
+                </div>
+            -->
                 
         </div>
         <header id="img-cont">
-                
+            <!--
+                <div class="image">
+                    <img src="/static/img/tlou1.png" alt="">
+                    <div class="info">
+                        <p>Size : 1600 x 900</p>
+                        <a href="/static/img/tlou1.png" download="tlou1.png">
+                            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 512 512">
+                                <title></title>
+                                <g id="icomoon-ignore">
+                                </g>
+                                <path d="M368 224l-128 128-128-128h80v-192h96v192zM240 352h-240v128h480v-128h-240zM448 416h-64v-32h64v32z"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="image">
+                    <img src="/static/img/tlou1.png" alt="">
+                    <div class="info">
+                        <p>Size : 1600 x 900</p>
+                        <a href="/static/img/tlou1.png" download="tlou1.png">
+                            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 512 512">
+                                <title></title>
+                                <g id="icomoon-ignore">
+                                </g>
+                                <path d="M368 224l-128 128-128-128h80v-192h96v192zM240 352h-240v128h480v-128h-240zM448 416h-64v-32h64v32z"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div> 
+                <div class="image">
+                    <img src="/static/img/tlou1.png" alt="">
+                    <div class="info">
+                        <p>Size : 1600 x 900</p>
+                        <a href="/static/img/tlou1.png" download="tlou1.png">
+                            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 512 512">
+                                <title></title>
+                                <g id="icomoon-ignore">
+                                </g>
+                                <path d="M368 224l-128 128-128-128h80v-192h96v192zM240 352h-240v128h480v-128h-240zM448 416h-64v-32h64v32z"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div> 
+                <div class="image">
+                    <img src="/static/img/tlou1.png" alt="">
+                    <div class="info">
+                        <p>Size : 1600 x 900</p>
+                        <a href="/static/img/tlou1.png" download="tlou1.png">
+                            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 512 512">
+                                <title></title>
+                                <g id="icomoon-ignore">
+                                </g>
+                                <path d="M368 224l-128 128-128-128h80v-192h96v192zM240 352h-240v128h480v-128h-240zM448 416h-64v-32h64v32z"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                -->
         </header>
         <div class="load-more">
-            <button onclick="getlink()">
-                Load more
+            <div class="form-control float" style="width:200px;margin-top: 0; height: -moz-fit-content;">
+                <form action="" style="white-space: nowrap;">
+                <input type="text"  id="howmany" placeholder="number of images to load">
+                </form>
+            </div>
+            <button disabled="true" id="load_more" onclick="getlink()">
+                WAIT..
             </button>
         </div>
     </div>

@@ -2,6 +2,8 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.chrome.options import Options
+from app.routes import session
+from app import all_users
 from bs4 import BeautifulSoup
 import time
 import requests
@@ -152,8 +154,8 @@ def get_image_link():
 
 def search_query(query):
     search_url=f"https://www.google.com/search?safe=off&site=&tbm=isch&source=hp&q={query}&oq={query}&gs_l=img"
-    browser.get(search_url)
-    #get_image_link()
+    #getting current requester browser object of its class User
+    all_users[session['id']].browser.get(search_url)
 
 def start_scrapper():
     '''
@@ -184,3 +186,5 @@ def start_scrapper():
         chrome_option.add_argument("--disable-dev-shm-usage")
         chrome_option.add_argument("--no-sandbox")
         browser = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"),chrome_options=chrome_option)
+        
+    return browser
