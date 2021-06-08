@@ -60,7 +60,7 @@ def get_all_the_image_divs():
 
 
 def get_actual_link(image_div):
-    image_link = browser.find_element_by_xpath('//*[@id="Sva75c"]/div/div/div[3]/div[2]/c-wiz/div[1]/div[1]/div/div[2]/a/img')
+    image_link = browser.find_element_by_xpath('//*[@id="Sva75c"]/div/div/div[3]/div[2]/c-wiz/div/div[1]/div[1]/div/div[2]/a/img')
     #WAIT()
     src = image_link
     #print("in function ",src)
@@ -75,7 +75,7 @@ def get_actual_link(image_div):
 
 def get_image_size():
     #WAIT(1)
-    images_size_element = browser.find_element_by_xpath('//*[@id="Sva75c"]/div/div/div[3]/div[2]/c-wiz/div[1]/div[1]/div/div[2]/a/span')
+    images_size_element = browser.find_element_by_xpath('//*[@id="Sva75c"]/div/div/div[3]/div[2]/c-wiz/div/div[1]/div[1]/div/div[2]/a/span')
     #print(images_size_element.get_attribute('innerHTML'))
     return images_size_element
 
